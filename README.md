@@ -93,4 +93,13 @@ gst-launch-1.0 \
 
 It seamlessly switches between feeds, but the content feed seems to bring down the whole pipeline...
 
-Actually, mediamtx seems to fail. DTS is greater than PTS error. That's expected.
+Actually, mediamtx seems to fail. DTS is greater than PTS error. That's expected .
+
+
+### On to the raspberry
+
+``` sh
+sudo apt update && sudo apt install $(cat packages.txt)
+```
+
+`
