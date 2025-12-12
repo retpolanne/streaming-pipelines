@@ -2,7 +2,15 @@
 
 SERVER_ADDR=$1
 
-GST_PLUGIN_PATH=$PWD gst-launch-1.0 \
+if [ "$(uname)" = "Linux" ]; then
+    sink="kmssink"
+    export GST_PLUGIN_PATH=$PWD
+else
+    sink="autovideosink"
+fi
+
+set -x
+gst-launch-1.0 \
     fallbacksrc uri=rtmp://$SERVER_ADDR/annietv/content \
     fallback-uri=rtmp://$SERVER_ADDR/annietv/pattern \
     immediate-fallback=true \
@@ -11,7 +19,7 @@ GST_PLUGIN_PATH=$PWD gst-launch-1.0 \
     restart-on-eos=true \
     name=d \
     ! videoconvert \
-    ! autovideosink \
+    ! $sink \
     d. \
     ! audioconvert \
     ! autoaudiosink
