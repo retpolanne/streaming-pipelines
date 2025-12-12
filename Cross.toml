@@ -1,0 +1,6 @@
+[target.aarch64-unknown-linux-gnu]
+xargo = false
+
+[target.aarch64-unknown-linux-gnu.dockerfile]
+file = "../Dockerfile.trixie-gst-aarch64-unknown-linux-gnu"
+context = "../cross/docker"

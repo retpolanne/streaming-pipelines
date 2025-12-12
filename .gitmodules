@@ -1,3 +1,6 @@
 [submodule "gst-plugins-rs"]
 	path = gst-plugins-rs
 	url = https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs.git
+[submodule "cross"]
+	path = cross
+	url = https://github.com/rust-embedded/cross.git

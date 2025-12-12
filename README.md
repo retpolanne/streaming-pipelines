@@ -115,6 +115,42 @@ It seamlessly switches between feeds, but the content feed seems to bring down t
 
 Actually, mediamtx seems to fail. DTS is greater than PTS error. That's expected .
 
+### Cross compiling fallbacksrc
+
+On your Mac. 
+
+I uninstalled the brew rustup and rust and installed rustup from rustup.rs.
+
+I also needed buildx, you can install it like [this](https://github.com/abiosoft/colima/discussions/273#discussioncomment-10733819)
+
+``` sh
+sed -i '.bak' 's/ubuntu/debian/g' ./cross/docker/lib.sh
+sed -i '.bak' 's/ubuntu\.com/debian\.org/g' ./cross/docker/common.sh
+sed -i '.bak' 's/if_ubuntu/if_debian/g' ./cross/docker/common.sh
+sed -i '.bak' 's/ \-p/ \-m/g' ./cross/docker/cmake.sh
+sed -i '.bak' 's/arm64/aarch64/g' ./cross/docker/cmake.sh
+cargo install --git https://github.com/rust-embedded/cross.git cross
+ln -fns $PWD/Cross.toml $PWD/gst-plugins-rs/Cross.toml
+rustup target add aarch64-unknown-linux-gnu
+cd gst-plugins-rs
+cross build -p gst-plugin-fallbackswitch --target aarch64-unknown-linux-gnu
+```
+
+After it compiles, copy:
+
+``` sh
+scp target/aarch64-unknown-linux-gnu/debug/libgstfallbackswitch.so retpolanne@navi.local:/home/retpolanne/streaming-pipelines
+```
+
+Then, on the raspberry:
+
+``` sh
+GST_PLUGIN_PATH=$PWD GST_DEBUG=4 gst-inspect-1.0 fallbackswitch
+```
+
+Thanks [Collabora](https://www.collabora.com/news-and-blog/blog/2020/06/23/cross-building-rust-gstreamer-plugins-for-the-raspberry-pi/)
+for teaching me how to do this cross compilation thing. I had to use the aarch64
+template due to my aarch64 raspbian.
 
 ### On to the raspberry
 
@@ -123,6 +159,8 @@ I had to upgrade to debian trixie `lsb_release -cs`.
 ``` sh
 sudo apt update && sudo apt install $(cat packages.txt)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cd gst-plugins-rs
+cargo install cargo-c
 cargo cinstall -p gst-plugin-fallbacksrc --prefix=/usr
 ```
 

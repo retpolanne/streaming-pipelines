@@ -2,7 +2,7 @@
 
 SERVER_ADDR=$1
 
-gst-launch-1.0 \
+GST_PLUGIN_PATH=$PWD gst-launch-1.0 \
     fallbacksrc uri=rtmp://$SERVER_ADDR/annietv/content \
     fallback-uri=rtmp://$SERVER_ADDR/annietv/pattern \
     immediate-fallback=true \
