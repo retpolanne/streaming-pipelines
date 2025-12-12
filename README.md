@@ -118,8 +118,11 @@ Actually, mediamtx seems to fail. DTS is greater than PTS error. That's expected
 
 ### On to the raspberry
 
+I had to upgrade to debian trixie `lsb_release -cs`.
+
 ``` sh
 sudo apt update && sudo apt install $(cat packages.txt)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo cinstall -p gst-plugin-fallbacksrc --prefix=/usr
 ```
 
-`
