@@ -22,4 +22,4 @@ gst-launch-1.0 \
     ! $sink \
     d. \
     ! audioconvert \
-    ! alsasink device=hw:1
+    ! alsasink device=default
