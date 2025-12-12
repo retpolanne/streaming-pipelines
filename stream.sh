@@ -5,8 +5,10 @@ SERVER_ADDR=$1
 if [ "$(uname)" = "Linux" ]; then
     sink="kmssink"
     export GST_PLUGIN_PATH=$PWD
+    audiosink="alsasink device=default"
 else
     sink="autovideosink"
+    audiosink="autoaudiosink"
 fi
 
 set -x
@@ -22,4 +24,5 @@ gst-launch-1.0 \
     ! $sink \
     d. \
     ! audioconvert \
-    ! alsasink device=default
+    ! audioresample \
+    ! $audiosink
