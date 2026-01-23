@@ -23,7 +23,7 @@ writeTimeout: 10s
 # A higher value allows to increase throughput, a lower value allows to save RAM.
 # Increasing due to:
 # https://github.com/bluenviron/mediamtx/issues/5093#issuecomment-3520832566
-writeQueueSize: 1024
+writeQueueSize: 65536
 # Maximum size of outgoing UDP packets.
 # This can be decreased to avoid fragmentation on networks with a low UDP MTU.
 udpMaxPayloadSize: 1472
@@ -334,7 +334,8 @@ hlsAllowOrigins: ['*']
 hlsTrustedProxies: []
 # By default, HLS is generated only when requested by a user.
 # This option allows to generate it always, avoiding the delay between request and generation.
-hlsAlwaysRemux: no
+# https://github.com/bluenviron/mediamtx/discussions/3898#discussioncomment-12120130
+hlsAlwaysRemux: yes
 # Variant of the HLS protocol to use. Available options are:
 # * mpegts - uses MPEG-TS segments, for maximum compatibility.
 # * fmp4 - uses fragmented MP4 segments, more efficient.

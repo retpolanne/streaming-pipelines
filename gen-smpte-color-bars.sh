@@ -10,7 +10,7 @@ ffmpeg \
     -i "sine=frequency=1000:sample_rate=48000" \
     -vf drawtext="text='AnnieTV Please Stand By':rate=30:x=(w-tw)/2:y=(h-lh)/2:fontsize=20:font='Andale Mono':fontcolor=white:box=1:boxcolor=black" \
     -f flv \
-    -c:v h264 \
+    -c:v libx264 \
     -profile:v baseline \
     -pix_fmt yuv420p \
     -preset ultrafast \
