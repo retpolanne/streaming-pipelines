@@ -5,7 +5,7 @@ SERVER_ADDR=$1
 ffmpeg \
     -re \
     -f lavfi \
-    -i "smptebars=rate=30:size=320x240" \
+    -i "smptebars=rate=30:size=480x320" \
     -f lavfi \
     -i "sine=frequency=1000:sample_rate=48000" \
     -vf drawtext="text='AnnieTV Please Stand By':rate=30:x=(w-tw)/2:y=(h-lh)/2:fontsize=20:font='Andale Mono':fontcolor=white:box=1:boxcolor=black" \
